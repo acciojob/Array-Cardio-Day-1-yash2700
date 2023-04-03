@@ -1,8 +1,3 @@
-// Get your shorts on - this is an array workout!
-// ## Array Cardio Day 1
-
-// Some data we can work with
-
 const inventors = [
     { first: 'Albert', last: 'Einstein', year: 1879, passed: 1955 },
     { first: 'Isaac', last: 'Newton', year: 1643, passed: 1727 },
@@ -29,25 +24,34 @@ const people = [
 // Array.prototype.filter()
 // 1. Filter the list of inventors for those who were born in the 1500's and return the filtered array
 export function myfilter() {
-return inventors.filter((i)=>{return i.year>=1500 && i.year<=1600})
+    return inventors.filter(function(ele){
+        if(ele['year']>=1500 && ele['year']<=1599)
+        {
+            return ele;
+        }
+    })
 }
+
 
 // Array.prototype.map()
 // 2. Give us an array of the inventor first and last names (i.e. full name)
 // Ex: For the first inventor the full name will be 'Albert Einstein'
 export function map() {
-let a=inventors.filter((i)=>{
-       return i.first=="Albert" && i.last=="Einstein"
-    })
-    return a[0].first+" "+a[0].last;
+    return inventors.map(function(str){
+        return [str.first,str.last].join(" ");
+    });
 }
+
+
 
 
 // Array.prototype.sort()
 // 3. Sort the inventors by birthdate, oldest to youngest and return the sorted array
 export function sort() {
-	        return inventors.sort((i,j)=>{return i.year-j.year})
-
+    inventors.sort((a,b)=>{
+        return a['year']-b['year'];
+    })
+    return inventors;
 }
 
 
@@ -55,41 +59,48 @@ export function sort() {
 // 4. How many years did all the inventors live?
 // Return the total number of years all the inventors lived
 export function reduce() {
-	 return inventors.reduce((acc,curr)=>{
-    return acc+curr.passed-curr.year;
-   },0)
-
+    return inventors.reduce(function(accu,curr){
+        let age=curr['passed']-curr['year'];
+        return accu + age;
+    },0);
 }
+
 
 // 5. Sort the inventors by years lived and return the sorted array
 export function sortbylived() {
- return inventors.sort((i,j)=>{return (i.passed-i.year)-(j.passed-j.year)})
+    return inventors.sort((a,b) => {
+        return (a.passed-a.year)-(b.passed-b.year);
+    });
 }
+
 
 // 6. sort Exercise
 // Sort the people alphabetically by last name and return the sorted array
 export function sortByLastName() {
-	 return people.sort((i,j)=>{
-            a=i.split(",").pop()
-            b=j.split(",").pop()
-            if(a>b)
-            return 1;
-            if(a<b)
-                return -1;
-            return 0;
-
-    })
-
+    return people.sort((a,b)=>{
+        let aLast=a.split(", ")[1];
+        let blast=b.split(", ")[1];
+        return aLast.localeCompare(blast);
+    });
 }
+
 
 // 7. Reduce Exercise
 // Sum up the instances of each of these
 const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck', 'pogostick'];
 
 export function reducedSum() {
-	return data.reduce((c,d)=>{
-           return (c[d]=c[d]+1||1,c)
+    // Return an object containing transports as key and its number of occurances as the key's value
+    return data.reduce((acc,transport)=>{
+        if(!acc[transport]){
+            acc[transport]=1;
+        }
+        else{
+            acc[transport]++;
+        }
+
+
+        return acc;
     },{})
 
-    // Return an object containing transports as key and its number of occurances as the key's value
 }
